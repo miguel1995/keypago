@@ -22,7 +22,13 @@ public class UsuarioController {
         return usuarioRepository.findAll();
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping("{id}")
+    Usuario findById(@PathVariable String id){
+        Usuario usuarioFromDb = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
+        return usuarioFromDb;
+    }
+
+        @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     Usuario create(@RequestBody Usuario usuario){
         return usuarioRepository.save(usuario);
@@ -38,6 +44,7 @@ public class UsuarioController {
         usuarioFromDb.setEdad(usuario.getEdad());
         usuarioFromDb.setTelefono(usuario.getTelefono());
         usuarioFromDb.setCorreo(usuario.getCorreo());
+        usuarioFromDb.setPassword(usuario.getPassword());
 
         return usuarioRepository.save(usuarioFromDb);
 

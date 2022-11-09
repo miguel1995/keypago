@@ -20,17 +20,19 @@ public class Usuario {
     private String telefono;
     @Field
     private String correo;
-
+    @Field
+    private String password;
     public Usuario() {
 
     }
 
-    public Usuario(String tipoIdentificacion, Date fechaNacimiento, Integer edad, String telefono, String correo) {
+    public Usuario(String tipoIdentificacion, Date fechaNacimiento, Integer edad, String telefono, String correo, String password) {
         this.tipoIdentificacion = tipoIdentificacion;
         this.fechaNacimiento = fechaNacimiento;
         this.edad = edad;
         this.telefono = telefono;
         this.correo = correo;
+        this.password = password;
     }
 
     public String getNumeroIdentificacion() {
@@ -81,6 +83,13 @@ public class Usuario {
         this.correo = correo;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
@@ -91,6 +100,7 @@ public class Usuario {
                 ", edad=" + edad +
                 ", telefono='" + telefono + '\'' +
                 ", correo='" + correo + '\'' +
+                ", password'" + password + '\'' +
                 '}';
     }
 }

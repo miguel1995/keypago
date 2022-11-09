@@ -1,0 +1,118 @@
+<div class="container py-5">
+
+
+
+    <div class="row">
+        <app-info></app-info>
+        
+    </div>
+    <div class="row" style="margin: 20px;">
+
+      <h1>Panel de Control</h1>
+      <h6>Administre los usuarios del sistemas aquí</h6>
+  
+      <div class="col-md-4" style="background-color: #eeeeee;">
+  
+        <div *ngIf="isEdit; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <h3>EDITAR información de un usuario </h3>
+        </ng-template>
+        <ng-template #elseBlock>
+          <h3>Crear nuevo Usuario </h3>
+        </ng-template>
+  
+  
+        <form (ngSubmit)="isEdit?save():create()">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Número de Identificación</label>
+            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.numeroIdentificacion" [ngModelOptions]="{standalone: true}" [disabled]="isEdit" >
+  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Tipo de Identificación</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.tipoIdentificacion" [ngModelOptions]="{standalone: true}">
+  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.fechaNacimiento" [ngModelOptions]="{standalone: true}">
+  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Edad</label>
+            <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.edad" [ngModelOptions]="{standalone: true}">
+  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Telefono</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.telefono" [ngModelOptions]="{standalone: true}">
+  
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Correo</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.correo" [ngModelOptions]="{standalone: true}">
+  
+          </div>
+  
+  
+          <div *ngIf="isEdit; then thenBlockSave else elseBlockSave"></div>
+          <ng-template #thenBlockSave>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </ng-template>
+          <ng-template #elseBlockSave>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </ng-template>
+  
+  
+        </form>
+      </div>
+  
+  
+      <div class="col-md-8">
+  
+        <table class="table">
+          <thead class="table-secondary">
+            <tr>
+              <th scope="col">Identificación</th>
+              <th scope="col">Tipo de Identificacion</th>
+              <th scope="col">Fecha de Nacimiento</th>
+              <th scope="col">Edad</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">correo</th>
+              <th scope="col">Opciones</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let usuario of usuarioList">
+            <tr>
+              <th scope="row">{{usuario.numeroIdentificacion}}</th>
+              <td>{{usuario.tipoIdentificacion}}</td>
+              <td>{{usuario.fechaNacimiento}}</td>
+              <td>{{usuario.edad}}</td>
+              <td>{{usuario.telefono}}</td>
+              <td>{{usuario.correo}}</td>
+              <td>
+                <div class="row">
+                  <div class="col-6" (click)="edit(usuario)">
+                    <fa-icon [icon]="faPencilSquare"></fa-icon>
+                  </div>
+                  <div class="col-6" (click)="delete(usuario)">
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  </div>
+  
+                </div>
+              </td>
+  
+            </tr>
+  
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+  </div>

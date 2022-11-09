@@ -1,0 +1,31 @@
+
+<div *ngIf="isUsuario; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+    <app-dashboard></app-dashboard>
+</ng-template>
+<ng-template #elseBlock>
+
+    <div class="container" style="margin: 100px;">
+        
+        <img src="./../../../../assets/images/imgLogin.jpg"/>
+        
+        <form>
+            <div class="form-group">
+            <label for="exampleInputEmail1">Número de cédula</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Escribe tu número de cédula"
+            [(ngModel)]="cedula">    
+            </div>
+            <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="****"
+            [(ngModel)]="password">
+            </div>
+            
+            <small id="emailHelp" class="form-text text-muted">{{cedulaMsg}}</small>
+
+            <button type="submit" class="btn btn-primary" (click)="iniciarSesion">Iniciar sesión</button>
+        </form>
+
+    </div>
+
+</ng-template>

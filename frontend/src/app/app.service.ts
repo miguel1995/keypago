@@ -18,6 +18,10 @@ export class AppService {
 
   getUsiarioAll(){
     return this.http.get(USUARIO_URL);
+  
+  }
+  getUsiarioById(id:any){
+    return this.http.get(USUARIO_URL+"/"+id);
   }
 
   create(usuario:any){
