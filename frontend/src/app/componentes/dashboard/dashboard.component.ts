@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges,
+  SimpleChanges} from '@angular/core';
 
 import { faPencilSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AppService } from 'src/app/app.service';
+
+const CryptoJS = require("crypto-js");
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
+
+
+  @Input() idUser = '';
 
   usuarioList:any[] = [];
   faPencilSquare = faPencilSquare;
@@ -24,6 +30,8 @@ export class DashboardComponent implements OnInit {
     password:""
   }
 
+  passMsg = "";
+
 
   constructor(
     private appService: AppService
@@ -31,6 +39,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit():void{
     this.getAll();
+    
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
   }
 
   getAll(){
@@ -42,30 +55,28 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  create(){
 
-    this.appService.create(this.newUsuario)
-    .subscribe(()=>{
-      this.getAll();
+  cryptoPass(str:any){
 
-      this.newUsuario = {
-
-        numeroIdentificacion: "",
-        tipoIdentificacion: "",
-        fechaNacimiento:new Date(),
-        edad:0,
-        telefono:"",
-        correo:"",
-        password:""
-
-      }
-    });
+    
+    let hash = CryptoJS.MD5(str).toString();
+    console.log(hash);
+    return hash;
 
   }
 
-  save(){
-    this.appService.update(this.newUsuario.numeroIdentificacion, this.newUsuario)
+  create(){
+
+    
+
+
+
+    if(this.validatePassword(this.newUsuario.password)){
+
+      this.newUsuario.password = this.cryptoPass(this.newUsuario.password);
+      this.appService.create(this.newUsuario)
     .subscribe(()=>{
+
       this.getAll();
 
       this.newUsuario = {
@@ -80,6 +91,45 @@ export class DashboardComponent implements OnInit {
 
       }
     });
+
+
+    }else{
+      this.passMsg = "Contraseña NO Valida, debe contener Al menos una mayúscula, Un carácter especial ( # & * ), Un número, Longitud mínima de 8.";
+    }
+
+    
+  }
+
+  save(){
+
+    if(this.validatePassword(this.newUsuario.password)){
+
+      this.newUsuario.password = this.cryptoPass(this.newUsuario.password);
+
+      this.appService.update(this.newUsuario.numeroIdentificacion, this.newUsuario)
+      .subscribe(()=>{
+        this.getAll();
+  
+        this.newUsuario = {
+  
+          numeroIdentificacion: "",
+          tipoIdentificacion: "",
+          fechaNacimiento:new Date(),
+          edad:0,
+          telefono:"",
+          correo:"",
+          password:""
+  
+        }
+      });
+
+
+    }else{
+      this.passMsg = "Contraseña NO Valida, debe contener Al menos una mayúscula, Un carácter especial ( # & * ), Un número, Longitud mínima de 8.";
+    }
+
+
+  
 
   }
 
@@ -100,5 +150,18 @@ export class DashboardComponent implements OnInit {
       this.getAll();
     })
   }
+
+  validatePassword(password:any){
+
+    //validar longitud contraseña
+    if ( password.length > 7 && password.match(/[^0-9]/) &&  password.match(/[^\#\&\*]/) && password.match(/[^A-Z]/)) {
+      console.log("Si pasa");
+        return true;
+    }else{
+      console.log("No pasa");
+      return false;
+    }
+ 
+ }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges,
+  SimpleChanges } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { AppService } from 'src/app/app.service';
 
@@ -8,6 +9,8 @@ import { AppService } from 'src/app/app.service';
   styleUrls: ['./info.component.css']
 })
 export class InfoComponent implements OnInit {
+
+  @Input() idUser = '';
 
   usuario = {
     numeroIdentificacion:"",
@@ -19,6 +22,7 @@ export class InfoComponent implements OnInit {
     password:""
 
   }
+
   faPlay = faPlay;
 
 
@@ -28,10 +32,14 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getById(2);
+    console.log("id" + this.idUser);
+    this.getById(this.idUser);
 
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("infoChanges: " + changes);
+  }
   
   getById(id:any){
     this.appService.getUsuarioById(id)

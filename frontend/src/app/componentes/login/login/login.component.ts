@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/app.service';
 
+const CryptoJS = require("crypto-js");
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -42,8 +45,9 @@ export class LoginComponent implements OnInit {
           if(data.numeroIdentificacion){
             this.usuario = data;
 
-            if(this.usuario.password == this.password){
+            if(this.usuario.password == this.cryptoPass(this.password)){
               this.isUsuario = true;
+              
             }else{
               this.cedulaMsg ="Contraseña incorrecta";  
             }
@@ -65,5 +69,17 @@ export class LoginComponent implements OnInit {
 
     this.isUsuario = false;
   }
+
+  
+  cryptoPass(str:any){
+
+    let hash = CryptoJS.MD5(str).toString();
+    console.log(hash);
+    return hash;
+
+  }
+
+
+  
 
 }

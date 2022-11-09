@@ -3,8 +3,7 @@
 
 
     <div class="row">
-        <app-info></app-info>
-        
+        <app-info [idUser]="idUser"></app-info>
     </div>
     <div class="row" style="margin: 20px;">
 
@@ -75,7 +74,10 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
           </ng-template>
   
-  
+          <br>
+          <div class="alert alert-primary">
+            {{passMsg}}
+          </div>
         </form>
       </div>
   
