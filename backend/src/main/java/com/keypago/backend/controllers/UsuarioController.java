@@ -24,10 +24,23 @@ public class UsuarioController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    Usuario create(@RequestBody Usuario tarea){
-        return usuarioRepository.save(tarea);
+    Usuario create(@RequestBody Usuario usuario){
+        return usuarioRepository.save(usuario);
     }
 
+    @PutMapping("{id}")
+    Usuario update(@PathVariable String id, @RequestBody Usuario usuario){
+        Usuario usuarioFromDb = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
 
+        //usuarioFromDb.setNumeroIdentificacion(usuario.getNumeroIdentificacion());
+        usuarioFromDb.setTipoIdentificacion(usuario.getTipoIdentificacion());
+        usuarioFromDb.setFechaNacimiento(usuario.getFechaNacimiento());
+        usuarioFromDb.setEdad(usuario.getEdad());
+        usuarioFromDb.setTelefono(usuario.getTelefono());
+        usuarioFromDb.setCorreo(usuario.getCorreo());
+
+        return usuarioRepository.save(usuarioFromDb);
+
+    }
 
 }
