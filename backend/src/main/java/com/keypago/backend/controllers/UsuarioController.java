@@ -4,10 +4,8 @@ package com.keypago.backend.controllers;
 import com.keypago.backend.models.Usuario;
 import com.keypago.backend.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +20,12 @@ public class UsuarioController {
     @GetMapping("")
     List<Usuario> index(){
         return usuarioRepository.findAll();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    Usuario create(@RequestBody Usuario tarea){
+        return usuarioRepository.save(tarea);
     }
 
 
