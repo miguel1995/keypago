@@ -59,6 +59,12 @@
               [(ngModel)]="newUsuario.correo" [ngModelOptions]="{standalone: true}">
   
           </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Password</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""
+              [(ngModel)]="newUsuario.password" [ngModelOptions]="{standalone: true}">
+  
+          </div>
   
   
           <div *ngIf="isEdit; then thenBlockSave else elseBlockSave"></div>
