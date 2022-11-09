@@ -43,4 +43,11 @@ public class UsuarioController {
 
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("{id}")
+    void delete(@PathVariable String id){
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(RuntimeException::new);
+        usuarioRepository.delete(usuario);
+    }
+
 }
