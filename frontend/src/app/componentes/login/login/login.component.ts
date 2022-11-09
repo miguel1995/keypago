@@ -33,23 +33,37 @@ export class LoginComponent implements OnInit {
   }
 
   iniciarSesion(){
-    this.appService.getUsiarioById(2)
+    console.log(this.cedula);
+    this.appService.getUsuarioById(this.cedula)
     .subscribe(
       (data:any)=>{
+
 
           if(data.numeroIdentificacion){
             this.usuario = data;
 
             if(this.usuario.password == this.password){
               this.isUsuario = true;
+            }else{
+              this.cedulaMsg ="Contraseña incorrecta";  
             }
             
             
           }else{
-            this.cedulaMsg ="El usuario no se encuentra registrado en la Base de datos"
+            this.cedulaMsg ="NOTA: El usuario no se encuentra registrado en la Base de datos"
           }
           
-      });
+      }  , err => {
+        // Entra aquí si el servicio entrega un código http de error EJ: 404, 
+        500
+        console.log(err)
+        this.cedulaMsg ="NOTA: El usuario no se encuentra registrado en la Base de datos"
+    });
+  }
+
+  cerrarSesion(){
+
+    this.isUsuario = false;
   }
 
 }

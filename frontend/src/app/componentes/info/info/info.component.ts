@@ -28,13 +28,13 @@ export class InfoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getById();
+    this.getById(2);
 
   }
 
   
-  getById(){
-    this.appService.getUsiarioById(2)
+  getById(id:any){
+    this.appService.getUsuarioById(id)
     .subscribe(
       (data:any)=>{
           this.usuario = data;

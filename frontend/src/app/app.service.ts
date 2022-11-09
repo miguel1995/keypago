@@ -16,11 +16,13 @@ export class AppService {
 
   }
 
-  getUsiarioAll(){
+  getUsuarioAll(){
     return this.http.get(USUARIO_URL);
   
   }
-  getUsiarioById(id:any){
+  getUsuarioById(id:any){
+    console.log(USUARIO_URL+"/"+id);
+
     return this.http.get(USUARIO_URL+"/"+id);
   }
 

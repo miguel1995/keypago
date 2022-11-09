@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAll(){
-    this.appService.getUsiarioAll()
+    this.appService.getUsuarioAll()
     .subscribe(
       (data:any)=>{
           this.usuarioList = data;
